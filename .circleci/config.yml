@@ -8,12 +8,12 @@ orbs:
 workflows:
     example-workflow:
       jobs:
-        - aws-ecr/build-and-push-image:
-            account-url: AWS_ECR_ACCOUNT_URL 
+        - aws-ecr/build-and-push-image:             
             aws-access-key-id: AWS_ACCESS_KEY_ID 
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
+            region: AWS_REGION 
+            account-url: AWS_ECR_ACCOUNT_URL
             create-repo: true 
             dockerfile: Dockerfile 
-            path: . 
-            region: AWS_REGION 
+            path: .             
             repo: capstone           
