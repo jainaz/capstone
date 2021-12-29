@@ -65,7 +65,6 @@ workflows:
         # - setup-job
         - create-cluster:
             cluster-name: capstoneCluster
-            requires: [ setup-job ]
 
         # - aws-eks/update-container-image:
         #     show-kubectl-command: true 
