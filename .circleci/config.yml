@@ -60,8 +60,9 @@ workflows:
         #     requires: [ lint-code ]  
 
         - setup-job
-        - create-small-cluster:
+        - create-cluster:
             cluster-name: capstoneCluster
+            requires: [ setup-job ]
 
         # - aws-eks/create-cluster:
         #     cluster-name: capstoneCluster 
