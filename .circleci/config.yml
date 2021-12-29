@@ -3,11 +3,25 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.3.0
 
-
+jobs:
+  lint-code:
+    docker:
+      - image: cimg/python:3.10.1
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: |
+            make install
+      - run:
+          name: Lint Code
+          command: |
+            make lint
 
 workflows:
     example-workflow:
       jobs:
+        - lint-code
         - aws-ecr/build-and-push-image:             
             aws-access-key-id: AWS_ACCESS_KEY_ID 
             aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
