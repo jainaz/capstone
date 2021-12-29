@@ -42,10 +42,10 @@ workflows:
         #     requires: [ lint-code ]  
 
         - example-job
-        # - aws-eks/create-cluster:
-        #     cluster-name: capstoneCluster 
-        #     aws-region: AWS_REGION 
-        #     show-eksctl-command: true
+        - aws-eks/create-cluster:
+            cluster-name: capstoneCluster 
+            aws-region: AWS_REGION 
+            show-eksctl-command: true
 
         # - aws-eks/update-container-image:
         #     show-kubectl-command: true 
