@@ -42,6 +42,7 @@ jobs:
           # ssh-access: true
           # ssh-public-key: 'Ansible-Ec2'
           aws-region: us-east-1
+          zones: us-east-1a, us-east-1b
 
 workflows:
   default:
