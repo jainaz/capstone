@@ -41,7 +41,7 @@ jobs:
           nodes-max: 2
           ssh-access: true
           ssh-public-key: 'Ansible-Ec2.pem'
-          aws-region: AWS_REGION
+          aws-region: us-east-1
 
 workflows:
   default:
