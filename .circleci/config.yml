@@ -6,5 +6,5 @@ orbs:
 workflows:
   deployment:
     jobs:
-      - aws-eks/create-cluster:
-          cluster-name: eks-demo-deployment      
+    - aws-eks/create-cluster:
+        cluster-name: eks-demo-deployment      
