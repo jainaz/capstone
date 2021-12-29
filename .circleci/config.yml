@@ -19,6 +19,13 @@ jobs:
           command: |
             make lint
 
+  example-job:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - aws-eks/setup
+         
+
 workflows:
     example-workflow:
       jobs:
@@ -34,6 +41,7 @@ workflows:
         #     repo: capstone         
         #     requires: [ lint-code ]  
 
+        - example-job
         - aws-eks/create-cluster:
             cluster-name: capstoneCluster 
             aws-region: AWS_REGION 
