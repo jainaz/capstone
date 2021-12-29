@@ -30,4 +30,5 @@ workflows:
             create-repo: true 
             dockerfile: Dockerfile 
             path: .             
-            repo: capstone           
+            repo: capstone         
+            requires: [ lint-code ]  
