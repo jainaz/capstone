@@ -1,9 +1,12 @@
 version: 2.1
 
 orbs:
-  aws-ecr: circleci/aws-ecr@7.3.0
-  aws-eks: circleci/aws-eks@2.0
-  kubernetes: circleci/kubernetes@1.0
+  # aws-ecr: circleci/aws-ecr@7.3.0
+  aws-ecr: circleci/aws-ecr@7.2.0
+  aws-ecs: circleci/aws-ecs@2.2.1
+  kubectl: airswap/kubectl@0.0.3
+  aws-eks: circleci/aws-eks@0.2.0
+  kubernetes: circleci/kubernetes@0.3.0
 
 jobs:
   lint-code:
@@ -37,6 +40,7 @@ jobs:
       - aws-eks/create-cluster:
           cluster-name: cluster-name
           skip-kubectl-install: false
+          show-eksctl-command: true
           verbose: 3
           node-type: t2.micro
           nodes-max: 2
@@ -63,11 +67,6 @@ workflows:
         - create-cluster:
             cluster-name: capstoneCluster
             requires: [ setup-job ]
-
-        # - aws-eks/create-cluster:
-        #     cluster-name: capstoneCluster 
-        #     aws-region: AWS_REGION 
-        #     show-eksctl-command: true
 
         # - aws-eks/update-container-image:
         #     show-kubectl-command: true 
