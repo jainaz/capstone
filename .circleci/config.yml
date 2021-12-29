@@ -22,11 +22,11 @@ jobs:
           command: |
             make lint
 
-  setup-job:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - aws-eks/setup
+  # setup-job:
+  #   docker:
+  #     - image: cimg/base:stable
+  #   steps:
+  #     - aws-eks/setup
 
   create-cluster:
     executor: aws-eks/python3
@@ -62,7 +62,7 @@ workflows:
         #     repo: capstone         
         #     requires: [ lint-code ]  
 
-        - setup-job
+        # - setup-job
         - create-cluster:
             cluster-name: capstoneCluster
             requires: [ setup-job ]
