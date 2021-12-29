@@ -40,7 +40,7 @@ jobs:
           node-type: t2.micro
           nodes-max: 2
           ssh-access: true
-          ssh-public-key: 'Ansible-Ec2.pem'
+          ssh-public-key: 'Ansible-Ec2'
           aws-region: us-east-1
 
 workflows:
