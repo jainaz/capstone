@@ -56,7 +56,7 @@ jobs:
           nodes-max: 2
           ssh-access: true
           ssh-public-key: 'Ansible-Ec2'
-          aws-region: us-east-1
+          aws-region: $AWS_REGION
           zones: us-east-1a,us-east-1b
 
   test-cluster:
@@ -100,10 +100,13 @@ jobs:
       - kubernetes/create-or-update-resource:
           get-rollout-status: true
           resource-file-path: applicationDeployment/my-app-deployment.yaml
-          resource-name: applicationDeployment/eks-capstone
+          resource-name: deployment/eks-capstone
+          show-kubectl-command: true
+          namespace: eks-capstone-ns
           
       - kubernetes/create-or-update-resource:
           resource-file-path: applicationDeployment/my-app-deployment.yaml
+          show-kubectl-command: true
     
   delete-cluster:
     executor: aws-eks/python3
@@ -166,8 +169,8 @@ workflows:
           cluster-name: eks-capstone
           requires:
             - test-cluster
-      - delete-cluster:
-          cluster-name: eks-capstone
-          region-name:  $AWS_REGION
-          requires:
-            - test-cluster
+      # - delete-cluster:
+      #     cluster-name: eks-capstone
+      #     region-name:  $AWS_REGION
+      #     requires:
+      #       - create-deployment
