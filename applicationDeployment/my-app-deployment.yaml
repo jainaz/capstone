@@ -6,7 +6,7 @@ metadata:
   labels:
     app: eks-capstone
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: eks-capstone
@@ -15,22 +15,18 @@ spec:
       labels:
         app: eks-capstone
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/arch
-                operator: In
-                values:
-                - amd64
-                - arm64
+      # containers:
+      # - name: nginx
+      #   image: public.ecr.aws/nginx/nginx:1.21
+      #   ports:
+      #   - name: http
+      #     containerPort: 80
+      #   imagePullPolicy: Always      
+      
       containers:
         - name: capstone
           image: 524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
           ports:
           - name: http
             containerPort: 80
-          imagePullPolicy: IfNotPresent
-      nodeSelector:
-          kubernetes.io/os: linux
+          imagePullPolicy: Always

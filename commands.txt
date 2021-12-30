@@ -1,0 +1,58 @@
+aws sts get-caller-identity
+
+aws eks update-kubeconfig  --region us-east-1 --name eks-capstone
+
+cat ~/.kube/config
+
+kubectl get svc
+
+============================
+
+kubectl create namespace eks-capstone-ns
+
+kubectl apply -f applicationDeployment/my-app-namespace.yaml
+
+kubectl get namespaces
+
+====================================================================================
+
+kubectl apply -f applicationDeployment/my-app-deployment.yaml --namespace=eks-capstone-ns
+
+kubectl get all -n eks-capstone-ns
+
+====================================================================================
+
+kubectl apply -f applicationDeployment/my-app-service.yaml --namespace=eks-capstone-ns
+
+====================================================================================
+
+kubectl get svc
+kubectl get services -o wide
+
+kubectl get nodes -o wide
+kubectl get deployment --all-namespaces
+
+kubectl get pods --all-namespaces -o wide
+kubectl describe pods --namespace=eks-capstone-ns
+kubectl --namespace=eks-capstone-ns describe pods    eks-capstone-767fd68dcd-mr8q5
+
+kubectl exec -it  eks-capstone-767fd68dcd-mr8q5 -n eks-capstone-ns -- /bin/bash
+
+kubectl get service --selector app=eks-capstone --namespace=eks-capstone-ns
+
+======================================================================
+
+kubectl describe configmap -n kube-system aws-auth
+kubectl get roles --all-namespaces
+
+kubectl delete namespace eks-capstone-ns
+
+kubectl scale deployment/eks-capstone --replicas 5
+
+
+======================================================================
+kubectl delete namespace eks-capstone-ns
+kubectl apply -f applicationDeployment/my-app-namespace.yaml
+kubectl apply -f applicationDeployment/my-app-deployment.yaml --namespace=eks-capstone-ns
+kubectl apply -f applicationDeployment/my-app-service.yaml --namespace=eks-capstone-ns
+kubectl get service --selector app=eks-capstone --namespace=eks-capstone-ns

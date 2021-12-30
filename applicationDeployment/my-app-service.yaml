@@ -6,6 +6,7 @@ metadata:
   labels:
     app: eks-capstone
 spec:
+  type: LoadBalancer
   selector:
     app: eks-capstone
   ports:
