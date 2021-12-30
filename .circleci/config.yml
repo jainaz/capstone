@@ -168,8 +168,8 @@ workflows:
       #     cluster-name: eks-capstone
       #     requires:
       #       - create-cluster
-      - create-deployment:
-          cluster-name: eks-capstone
+      # - create-deployment:
+      #     cluster-name: eks-capstone
           # requires:
           #   - test-cluster
       - aws-eks/update-container-image:
@@ -179,8 +179,9 @@ workflows:
             container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
             get-rollout-status: true
             resource-name: deployment/eks-capstone
-            requires:
-              - create-deployment
+            namespace: eks-capstone-ns
+            # requires:
+            #   - create-deployment
       # - delete-cluster:
       #     cluster-name: eks-capstone
       #     region-name:  $AWS_REGION
