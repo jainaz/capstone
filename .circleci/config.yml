@@ -108,5 +108,6 @@ workflows:
           #   - create-cluster
       - aws-eks/delete-cluster:
           cluster-name: eks-capstone
+          aws-region:  $AWS_REGION
           requires:
             - test-cluster
