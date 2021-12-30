@@ -199,7 +199,7 @@ workflows:
             show-kubectl-command: true 
             cluster-name: eks-capstone 
             aws-region:  $AWS_REGION
-            container-image-updates: 524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+            container-image-updates: capstone=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
             get-rollout-status: true
             resource-name: deployment/eks-capstone
             namespace: eks-capstone-ns
