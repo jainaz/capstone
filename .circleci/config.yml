@@ -173,28 +173,28 @@ jobs:
 workflows:
   default:
     jobs:
-      # - lint-code
-      # - aws-ecr/build-and-push-image:             
-      #     aws-access-key-id: AWS_ACCESS_KEY_ID 
-      #     aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
-      #     region: AWS_REGION 
-      #     account-url: AWS_ECR_ACCOUNT_URL
-      #     create-repo: true 
-      #     dockerfile: Dockerfile 
-      #     path: .             
-      #     repo: capstone         
-      #     requires: [ lint-code ]  
-      # - create-cluster:
-      #     cluster-name: eks-capstone      
-      #     requires: [ aws-ecr/build-and-push-image ]
-      # - test-cluster:
-      #     cluster-name: eks-capstone
-      #     requires:
-      #       - create-cluster
+      - lint-code
+      - aws-ecr/build-and-push-image:             
+          aws-access-key-id: AWS_ACCESS_KEY_ID 
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
+          region: AWS_REGION 
+          account-url: AWS_ECR_ACCOUNT_URL
+          create-repo: true 
+          dockerfile: Dockerfile 
+          path: .             
+          repo: capstone         
+          requires: [ lint-code ]  
+      - create-cluster:
+          cluster-name: eks-capstone      
+          requires: [ aws-ecr/build-and-push-image ]
+      - test-cluster:
+          cluster-name: eks-capstone
+          requires:
+            - create-cluster
       - create-deployment:
           cluster-name: eks-capstone
-          # requires:
-          #   - test-cluster
+          requires:
+            - test-cluster
       - test-cluster:
           cluster-name: eks-capstone
           requires:

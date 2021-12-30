@@ -56,3 +56,5 @@ kubectl apply -f applicationDeployment/my-app-namespace.yaml
 kubectl apply -f applicationDeployment/my-app-deployment.yaml --namespace=eks-capstone-ns
 kubectl apply -f applicationDeployment/my-app-service.yaml --namespace=eks-capstone-ns
 kubectl get service --selector app=eks-capstone --namespace=eks-capstone-ns
+
+kubectl set image deployment/eks-capstone capstone=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest --namespace=eks-capstone-ns
