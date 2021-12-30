@@ -84,6 +84,27 @@ jobs:
 
           name: Test cluster
 
+  create-deployment:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+    steps:
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          aws-region:  $AWS_REGION
+          install-kubectl: true
+      - kubernetes/create-or-update-resource:
+          get-rollout-status: true
+          resource-file-path: applicationDeployment/my-app-deployment.yaml
+          resource-name: applicationDeployment/eks-capstone
+          
+      - kubernetes/create-or-update-resource:
+          resource-file-path: applicationDeployment/my-app-deployment.yaml
+    
   delete-cluster:
     executor: aws-eks/python3
     parameters:
@@ -123,24 +144,28 @@ jobs:
 workflows:
   default:
     jobs:
-      # - lint-code
-      # - aws-ecr/build-and-push-image:             
-      #     aws-access-key-id: AWS_ACCESS_KEY_ID 
-      #     aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
-      #     region: AWS_REGION 
-      #     account-url: AWS_ECR_ACCOUNT_URL
-      #     create-repo: true 
-      #     dockerfile: Dockerfile 
-      #     path: .             
-      #     repo: capstone         
-      #     requires: [ lint-code ]  
-      # - create-cluster:
-      #     cluster-name: eks-capstone      
-      #     requires: [ aws-ecr/build-and-push-image ]
+      - lint-code
+      - aws-ecr/build-and-push-image:             
+          aws-access-key-id: AWS_ACCESS_KEY_ID 
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
+          region: AWS_REGION 
+          account-url: AWS_ECR_ACCOUNT_URL
+          create-repo: true 
+          dockerfile: Dockerfile 
+          path: .             
+          repo: capstone         
+          requires: [ lint-code ]  
+      - create-cluster:
+          cluster-name: eks-capstone      
+          requires: [ aws-ecr/build-and-push-image ]
       - test-cluster:
           cluster-name: eks-capstone
-          # requires:
-          #   - create-cluster
+          requires:
+            - create-cluster
+      - create-deployment:
+          cluster-name: eks-capstone
+          requires:
+            - test-cluster
       - delete-cluster:
           cluster-name: eks-capstone
           region-name:  $AWS_REGION
