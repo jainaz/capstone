@@ -48,17 +48,17 @@ jobs:
 workflows:
     example-workflow:
       jobs:
-        # - lint-code
-        # - aws-ecr/build-and-push-image:             
-        #     aws-access-key-id: AWS_ACCESS_KEY_ID 
-        #     aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
-        #     region: AWS_REGION 
-        #     account-url: AWS_ECR_ACCOUNT_URL
-        #     create-repo: true 
-        #     dockerfile: Dockerfile 
-        #     path: .             
-        #     repo: capstone         
-        #     requires: [ lint-code ]  
+        - lint-code
+        - aws-ecr/build-and-push-image:             
+            aws-access-key-id: AWS_ACCESS_KEY_ID 
+            aws-secret-access-key: AWS_SECRET_ACCESS_KEY 
+            region: AWS_REGION 
+            account-url: AWS_ECR_ACCOUNT_URL
+            create-repo: true 
+            dockerfile: Dockerfile 
+            path: .             
+            repo: capstone         
+            requires: [ lint-code ]  
 
         # - setup-job
         - create-cluster:
