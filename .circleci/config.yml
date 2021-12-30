@@ -111,27 +111,27 @@ jobs:
           show-kubectl-command: true
           namespace: eks-capstone-ns
     
-  update-deployment:
-    executor: aws-eks/python3
-    parameters:
-      cluster-name:
-        description: |
-          Name of the EKS cluster
-        type: string
-    steps:
-      - checkout
-      - aws-eks/update-kubeconfig-with-authenticator:
-          cluster-name: << parameters.cluster-name >>
-          aws-region:  $AWS_REGION
-          install-kubectl: true
-      - kubernetes/update-container-image:
-          show-kubectl-command: true 
-          cluster-name: eks-capstone 
-          aws-region:  $AWS_REGION
-          container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
-          get-rollout-status: true
-          resource-name: deployment/eks-capstone
-          namespace: eks-capstone-ns
+  # update-deployment:
+  #   executor: aws-eks/python3
+  #   parameters:
+  #     cluster-name:
+  #       description: |
+  #         Name of the EKS cluster
+  #       type: string
+  #   steps:
+  #     - checkout
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         cluster-name: << parameters.cluster-name >>
+  #         aws-region:  $AWS_REGION
+  #         install-kubectl: true
+  #     - kubernetes/update-container-image:
+  #         show-kubectl-command: true 
+  #         cluster-name: eks-capstone 
+  #         aws-region:  $AWS_REGION
+  #         container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+  #         get-rollout-status: true
+  #         resource-name: deployment/eks-capstone
+  #         namespace: eks-capstone-ns
 
   
   delete-cluster:
@@ -191,10 +191,12 @@ workflows:
       #     cluster-name: eks-capstone
       #     requires:
       #       - create-cluster
-      # - create-deployment:
-      #     cluster-name: eks-capstone
+      - create-deployment:
+          cluster-name: eks-capstone
           # requires:
           #   - test-cluster
+      - test-cluster:
+          cluster-name: eks-capstone
       - aws-eks/update-container-image:
             show-kubectl-command: true 
             cluster-name: eks-capstone 
@@ -203,10 +205,10 @@ workflows:
             get-rollout-status: true
             resource-name: deployment/eks-capstone
             namespace: eks-capstone-ns
-            # requires:
-            #   - create-deployment
-      # - delete-cluster:
-      #     cluster-name: eks-capstone
-      #     region-name:  $AWS_REGION
-      #     requires:
-      #       - aws-eks/update-container-image
+            requires:
+              - create-deployment
+      - delete-cluster:
+          cluster-name: eks-capstone
+          region-name:  $AWS_REGION
+          requires:
+            - aws-eks/update-container-image
