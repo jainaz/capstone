@@ -1,7 +1,7 @@
 version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.3.0
-  aws-eks: circleci/aws-eks@1.1.0
+  aws-eks: circleci/aws-eks@2.1.0
   kubernetes: circleci/kubernetes@0.4.0
 
 jobs:
@@ -61,14 +61,14 @@ jobs:
 
   test-cluster:
     executor: aws-eks/python3
+    
     parameters:
       cluster-name:
         description: |
           Name of the EKS cluster
         type: string
-    docker:
-      - image: cimg/base:stable
-      
+    
+
     steps:
       - kubernetes/install
       - aws-eks/setup
