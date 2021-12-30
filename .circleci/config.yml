@@ -195,10 +195,6 @@ workflows:
           cluster-name: eks-capstone
           requires:
             - test-cluster
-      - test-cluster:
-          cluster-name: eks-capstone
-          requires:
-              - create-deployment
       - aws-eks/update-container-image:
             show-kubectl-command: true 
             cluster-name: eks-capstone 
@@ -208,7 +204,7 @@ workflows:
             resource-name: deployment/eks-capstone
             namespace: eks-capstone-ns
             requires:
-              - test-cluster
+              - create-deployment
       - delete-cluster:
           cluster-name: eks-capstone
           region-name:  $AWS_REGION
