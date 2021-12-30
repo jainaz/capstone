@@ -111,6 +111,29 @@ jobs:
           show-kubectl-command: true
           namespace: eks-capstone-ns
     
+  update-deployment:
+    executor: aws-eks/python3
+    parameters:
+      cluster-name:
+        description: |
+          Name of the EKS cluster
+        type: string
+    steps:
+      - checkout
+      - aws-eks/update-kubeconfig-with-authenticator:
+          cluster-name: << parameters.cluster-name >>
+          aws-region:  $AWS_REGION
+          install-kubectl: true
+      - kubernetes/update-container-image:
+          show-kubectl-command: true 
+          cluster-name: eks-capstone 
+          aws-region:  $AWS_REGION
+          container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+          get-rollout-status: true
+          resource-name: deployment/eks-capstone
+          namespace: eks-capstone-ns
+
+  
   delete-cluster:
     executor: aws-eks/python3
     parameters:
@@ -176,7 +199,7 @@ workflows:
             show-kubectl-command: true 
             cluster-name: eks-capstone 
             aws-region:  $AWS_REGION
-            container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+            container-image-updates: 524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
             get-rollout-status: true
             resource-name: deployment/eks-capstone
             namespace: eks-capstone-ns
