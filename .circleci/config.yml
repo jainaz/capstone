@@ -118,7 +118,7 @@ jobs:
 
       - aws-eks/delete-cluster:
           cluster-name: << parameters.cluster-name >>
-          aws-region: $AWS_REGION
+          aws-region: << parameters.region-name >>
           wait: true 
 
 workflows:
@@ -144,6 +144,6 @@ workflows:
           #   - create-cluster
       - delete-cluster:
           cluster-name: eks-capstone
-          aws-region:  $AWS_REGION
+          region-name:  $AWS_REGION
           requires:
             - test-cluster
