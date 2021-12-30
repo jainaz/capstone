@@ -16,7 +16,7 @@ spec:
         app: eks-capstone
     spec:
       containers:
-      - name: nginx
+      - name: capstone
         image: public.ecr.aws/nginx/nginx:1.21
         ports:
         - name: http
