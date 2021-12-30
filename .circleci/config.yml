@@ -175,7 +175,10 @@ workflows:
       - aws-eks/update-container-image:
             show-kubectl-command: true 
             cluster-name: eks-capstone 
+            aws-region:  $AWS_REGION
             container-image-updates: CONTAINER_NAME_1=524381496777.dkr.ecr.us-east-1.amazonaws.com/capstone:latest
+            requires:
+              - create-deployment
       # - delete-cluster:
       #     cluster-name: eks-capstone
       #     region-name:  $AWS_REGION
