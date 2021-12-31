@@ -4,9 +4,6 @@ FROM python:3.8-slim-buster
 # Create a working directory
 WORKDIR /app
 
-#attempt to fail lint
-hsdskk
-
 ## Step 2:
 # Copy source code to working directory
 COPY . app.py /app/
